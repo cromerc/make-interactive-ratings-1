@@ -3,6 +3,14 @@ import { reactive } from "vue";
 import { StarIcon } from "@heroicons/vue/24/solid";
 import { items } from "./movies.json";
 const movies = reactive(items);
+
+const updateRating = (id, star) => {
+  movies.forEach((movie) => {
+    if (movie.id === id) {
+      movie.rating = star;
+    }
+  });
+};
 </script>
 
 <template>
@@ -28,10 +36,13 @@ const movies = reactive(items);
             <span class="movie-item-rating-text">
               Rating: ({{ movie.rating }}/5)
             </span>
-            <button v-for="star in movie.rating" :key="`star-${star}`">
-              <StarIcon class="movie-item-star-icon" />
-            </button>
-            <button v-for="star in 5 - movie.rating" :key="`star-${star}`">
+            <template v-for="star in movie.rating" :key="`star-${star}`">
+              <button :disabled="movie.rating == star" @click="updateRating(movie.id, star)">
+                <StarIcon class="movie-item-star-icon" />
+              </button>
+            </template>
+            <button v-for="star in 5 - movie.rating" :key="`star-${star}`"
+              @click="updateRating(movie.id, star + movie.rating)">
               <StarIcon class="movie-item-star-icon-gray" />
             </button>
           </div>
