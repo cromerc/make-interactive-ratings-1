@@ -17,12 +17,8 @@ const movies = reactive(items);
           <div class="movie-item-title-wrapper">
             <h3 class="movie-item-title">{{ movie.name }}</h3>
             <div class="movie-item-genres-wrapper">
-              <span
-                v-for="genre in movie.genres"
-                :key="`${movie.id}-${genre}`"
-                class="movie-item-genre-tag"
-                >{{ genre }}</span
-              >
+              <span v-for="genre in movie.genres" :key="`${movie.id}-${genre}`" class="movie-item-genre-tag">{{ genre
+              }}</span>
             </div>
           </div>
           <div class="movie-item-description-wrapper">
@@ -32,11 +28,12 @@ const movies = reactive(items);
             <span class="movie-item-rating-text">
               Rating: ({{ movie.rating }}/5)
             </span>
-            <StarIcon
-              v-for="star in movie.rating"
-              :key="`star-${star}`"
-              class="movie-item-star-icon"
-            />
+            <button v-for="star in movie.rating" :key="`star-${star}`">
+              <StarIcon class="movie-item-star-icon" />
+            </button>
+            <button v-for="star in 5 - movie.rating" :key="`star-${star}`">
+              <StarIcon class="movie-item-star-icon-gray" />
+            </button>
           </div>
         </div>
       </div>
